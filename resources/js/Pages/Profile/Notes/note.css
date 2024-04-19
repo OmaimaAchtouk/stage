@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+.sidebar{
+    height: 100vh;
+    width: 20vw;
+}
+
+.app {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Adjust the layout to have three rows */
+    grid-template-columns: 250px 1fr; /* Sidebar takes up 250px, content takes up the rest */
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 0;
+   }
+
+   .navbar_content {
+    grid-column: 1 / span 2; /* Span across both columns */
+    /* Style for the navbar */
+    padding: 10px;
+   }
+
+   .sidebar-container {
+    /* Style for the sidebar container */
+    grid-row: 2; /* Position in the second row */
+    grid-column: 1; /* Position in the first column */
+   }
+
+   .content-container {
+    grid-row: 2; /* Position in the second row */
+    grid-column: 2; /* Position in the second column */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+   }
+
+   .content {
+    padding: 20px; /* Example padding */
+   }
+
+
+
