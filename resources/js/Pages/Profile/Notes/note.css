@@ -34,7 +34,7 @@
    }
 
    .content-container {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     grid-row: 2; /* Position in the second row */
     grid-column: 2; /* Position in the second column */
      /* Enable scrolling if content overflows */
@@ -68,6 +68,23 @@
     justify-content: center;
     margin-bottom: 20px; /* Add margin between inputs and notes */
 }
+.note-item {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+   }
+
+   .note-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+   }
+
+   .note-actions button {
+    margin-left: 5px;
+   }
 
 
 

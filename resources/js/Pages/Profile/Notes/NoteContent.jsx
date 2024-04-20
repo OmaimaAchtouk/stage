@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, router } from '@inertiajs/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+
 import './note.css'
 const NoteContent = ({ auth, data,cn,notes}) => {
     const [isValid, setIsValid] = useState(false);
@@ -16,11 +19,12 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             ...values,
             [key]: value,
         }))
-        setIsValid(value.trim() !== '');
+        setIsValid(values.note_title.trim() !== '' && values.note_desc.trim() !== '');
+
   }
   const handleNoteAdd=(e)=>{
     e.preventDefault()
-    if (isValid){
+    if (values.note_title.trim() !== '' && values.note_desc.trim() !== ''){
     router.post('/add',values)
     setValues({
         note_title: '',
@@ -29,6 +33,15 @@ const NoteContent = ({ auth, data,cn,notes}) => {
     }
 
   }
+  const handleDelete = (noteId) => {
+    console.log(`Delete note with ID: ${noteId}`);
+    router.delete(`/note/${noteId}`)
+ };
+
+ const handleEdit = (noteId) => {
+    console.log(`Edit note with ID: ${noteId}`);
+    // Implement your edit logic here
+ };
 
 
   return (
@@ -55,6 +68,14 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             return (<div key={index} className='note-item'>
                         <h1> {note.title_note}</h1>
                         <p>{note.description}</p>
+                        <div className="note-actions">
+                          <button onClick={() => handleEdit(note.id_note)}>
+                                <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                          <button onClick={() => handleDelete(note.id_note)}>
+                                <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                         </div>
                     </div>
                    );
         })}

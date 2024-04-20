@@ -83,8 +83,21 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_note)
     {
-        //
+        // Find the note by its ID
+    $note = Note::find($id_note);
+
+    // Check if the note exists and belongs to the authenticated user
+    if ($note && $note->user_id == Auth::id()) {
+        // Delete the note
+        $note->delete();
+
+        // Redirect back to the notes index page
+        return redirect()->route('note.index');
+    }
+
+    // If the note does not exist or does not belong to the authenticated user, redirect with an error message
+    return redirect()->route('note.index')->with('error', 'Note not found or you do not have permission to delete this note.');
     }
 }

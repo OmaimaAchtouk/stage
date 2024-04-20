@@ -9,7 +9,10 @@ class Note extends Model
 {
     protected $fillable = ['title_note', 'description', 'user_id'];
 
-    public function user()                                                                                                                                                                          
+    // Specify the primary key for the model.
+    protected $primaryKey = 'id_note';
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
