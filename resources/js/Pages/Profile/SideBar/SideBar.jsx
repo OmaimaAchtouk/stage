@@ -6,7 +6,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-// import './SideBar.css';
+import '../Notes/note.css';
 
 const SideBar = ({ onTitleChange }) => {
  const [collapsed, setCollapsed] = useState(false);

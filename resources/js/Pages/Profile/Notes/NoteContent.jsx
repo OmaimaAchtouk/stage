@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, router } from '@inertiajs/react';
-
+import './note.css'
 const NoteContent = ({ auth, data,cn,notes}) => {
-
+    const [isValid, setIsValid] = useState(false);
   const [values, setValues] = useState({
     note_title: "",
     note_desc: "",
@@ -16,22 +16,24 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             ...values,
             [key]: value,
         }))
+        setIsValid(value.trim() !== '');
   }
   const handleNoteAdd=(e)=>{
     e.preventDefault()
+    if (isValid){
     router.post('/add',values)
     setValues({
         note_title: '',
         note_desc: '',
       });
-
+    }
 
   }
 
 
   return (
     <div>
-     <form onSubmit={handleNoteAdd}>
+     <form onSubmit={handleNoteAdd} className='note_form_title_descreption'>
      <div className='input_note_'>
         <input type='text' id='note_title'
           className='input_create_note'
@@ -47,20 +49,20 @@ const NoteContent = ({ auth, data,cn,notes}) => {
           />
         <button >add</button>
       </div>
-      <div>
-      <ul>
+      <div className='notes-grid'>
+
         {notes.map((note,index)=>{
-            return <li key={index}>{note.title_note} {note.description}</li>
+            return (<div key={index} className='note-item'>
+                        <h1> {note.title_note}</h1>
+                        <p>{note.description}</p>
+                    </div>
+                   );
         })}
-      </ul>
+
 
       </div>
     </form>
-      <div>
 
-            {cn}
-
-      </div>
 
     </div>
   )

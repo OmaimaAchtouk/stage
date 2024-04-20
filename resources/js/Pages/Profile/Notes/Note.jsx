@@ -15,6 +15,7 @@ const SideBarRoutes = ({content,notes}) => {
     setTitle(newTitle);
  };
 
+
  return (
 
       <div className="app">
@@ -22,12 +23,12 @@ const SideBarRoutes = ({content,notes}) => {
           <Navbar title={title} />
         </div>
         <div className="sidebar-container">
-          <SideBar onTitleChange={handleTitleChange} />
+          <SideBar onTitleChange={handleTitleChange}/>
         </div>
         <div className="content-container">
           <div className="content">
-            <NoteContent  cn={content} notes={notes}/>
-
+            <NoteContent   notes={notes}/>
+            
             {/* Your page components will be rendered here by Inertia.js */}
           </div>
         </div>
