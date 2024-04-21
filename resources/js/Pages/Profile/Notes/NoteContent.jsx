@@ -7,7 +7,7 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import './note.css'
 const NoteContent = ({ auth, data,cn,notes}) => {
-    const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const [values, setValues] = useState({
     note_title: "",
     note_desc: "",
@@ -19,17 +19,22 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             ...values,
             [key]: value,
         }))
-        setIsValid(values.note_title.trim() !== '' && values.note_desc.trim() !== '');
+        // Calculate isValid based on the new values
+    const newIsValid = (key === 'note_title' ? value.trim() : values.note_title.trim()) !== '' ||
+    (key === 'note_desc' ? value.trim() : values.note_desc.trim()) !== '';
+    setIsValid(newIsValid);
 
   }
   const handleNoteAdd=(e)=>{
     e.preventDefault()
-    if (values.note_title.trim() !== '' && values.note_desc.trim() !== ''){
+    if (isValid){
     router.post('/add',values)
     setValues({
         note_title: '',
         note_desc: '',
       });
+    // Reset isValid state after submission
+    setIsValid(false)
     }
 
   }
