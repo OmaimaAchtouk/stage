@@ -34,6 +34,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+<<<<<<< HEAD
+=======
+    Route::get('note', [NoteController::class, 'index'])->name('note.index');
+    Route::post('add', [NoteController::class, 'store'])->name('note.store');
+    Route::delete('/note/{id_note}', [NoteController::class, 'destroy'])->name('note.destroy');
+    Route::post('/profile/add', [ProfileController::class, 'add'])->name('profile.add');
+    Route::get('/profile/test', [ProfileController::class, 'test'])->name('profile.test');
+>>>>>>> 2d56d981e1d0d57f41e5b94fb4e1ddd6c3a413ba
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

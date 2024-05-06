@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, router } from '@inertiajs/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+
 import './note.css'
 const NoteContent = ({ auth, data,cn,notes}) => {
-    const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const [values, setValues] = useState({
     note_title: "",
     note_desc: "",
@@ -16,7 +19,11 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             ...values,
             [key]: value,
         }))
-        setIsValid(value.trim() !== '');
+        // Calculate isValid based on the new values
+    const newIsValid = (key === 'note_title' ? value.trim() : values.note_title.trim()) !== '' ||
+    (key === 'note_desc' ? value.trim() : values.note_desc.trim()) !== '';
+    setIsValid(newIsValid);
+
   }
   const handleNoteAdd=(e)=>{
     e.preventDefault()
@@ -26,9 +33,20 @@ const NoteContent = ({ auth, data,cn,notes}) => {
         note_title: '',
         note_desc: '',
       });
+    // Reset isValid state after submission
+    setIsValid(false)
     }
 
   }
+  const handleDelete = (noteId) => {
+    console.log(`Delete note with ID: ${noteId}`);
+    router.delete(`/note/${noteId}`)
+ };
+
+ const handleEdit = (noteId) => {
+    console.log(`Edit note with ID: ${noteId}`);
+    // Implement your edit logic here
+ };
 
 
   return (
@@ -55,6 +73,14 @@ const NoteContent = ({ auth, data,cn,notes}) => {
             return (<div key={index} className='note-item'>
                         <h1> {note.title_note}</h1>
                         <p>{note.description}</p>
+                        <div className="note-actions">
+                          <button onClick={() => handleEdit(note.id_note)}>
+                                <FontAwesomeIcon icon={faEdit} />
+                          </button>
+                          <button onClick={() => handleDelete(note.id_note)}>
+                                <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                         </div>
                     </div>
                    );
         })}
