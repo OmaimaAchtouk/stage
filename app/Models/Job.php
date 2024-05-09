@@ -7,8 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    protected $fillable = ['title_job', 'date_job', 'id_user'];
+    use HasFactory;
 
+   
+
+    protected $fillable = ['title_job', 'date_job', 'user_id'];
+
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

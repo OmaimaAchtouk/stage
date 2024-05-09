@@ -1,11 +1,23 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
+import './listtask.css';
 
-const task = () => {
-  return (
+function Task({ task, toggleCompleted,setTaskChanged }) {
+  // const [taskChanged,setTaskChanged]=useState(task.title_task)
+ return (
     <div>
-        hi im task
+      <input className='checkTask'
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => toggleCompleted(task.id_task)}
+      />  
+        <input 
+        type="text" className='textTask'
+        value={task.title_task}
+        onChange={() => setTaskChanged(task.title_task)}
+      />  
     </div>
-  )
+ );
 }
 
-export default task
+export default Task;

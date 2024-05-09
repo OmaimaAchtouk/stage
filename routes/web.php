@@ -1,7 +1,8 @@
 <?php
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\TaskController;
+
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\JobController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,12 +17,15 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
 Route::get('/test',function(){
 return Inertia::render('FlewbiteTest');
 });
 
 
 
+=======
+>>>>>>> 61ebc7be209da92e624962c1b554f85314b2457c
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -32,11 +36,15 @@ Route::get('/', function () {
     ]);
 });
 
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+<<<<<<< HEAD
+=======
     Route::get('note', [NoteController::class, 'index'])->name('note.index');
     Route::post('add', [NoteController::class, 'store'])->name('note.store');
     Route::delete('/note/{id_note}', [NoteController::class, 'destroy'])->name('note.destroy');
@@ -47,11 +55,37 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/profile/add', [ProfileController::class, 'add'])->name('profile.add');
     Route::get('/profile/test', [ProfileController::class, 'test'])->name('profile.test');
+>>>>>>> 2d56d981e1d0d57f41e5b94fb4e1ddd6c3a413ba
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
+
+
+    //  create tasks route 
+    // Route::get('/task', [TaskController::class, 'index'])->name('task.index');
+    //  Route::post('/task/store', [TaskController::class, 'store'])->name('task.store');
+    //  Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('task.toggle');
+    //  Route::delete('/task/destroy/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
+   
+      //  create tasks route 
+    
+      Route::get('/job', [JobController::class, 'index'])->name('job.index');
+      Route::post('/job/store', [JobController::class, 'store'])->name('job.store');
+      Route::delete('/job/{id}', [JobController::class, 'destroy'])->name('job.destroy');
+      Route::put('/job/{id}', [JobController::class, 'update'])->name('job.update');
+     
+
+
+
+
+  
+   
+    
+
+
+});
+  
 
 
 require __DIR__.'/auth.php';

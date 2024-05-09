@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 *{
     box-sizing: border-box;
     margin: 0;
@@ -10,82 +11,221 @@
     /* width: 20vw; */
 }
 
-.app {
-    display: grid;
-    grid-template-rows: auto 1fr auto; /* Adjust the layout to have three rows */
-    grid-template-columns: 250px 1fr; /* Sidebar takes up 250px, content takes up the rest */
-    height: 100vh; /* Full viewport height */
-    margin: 0;
-    padding: 0;
-    justify-content: center; /* Center the content horizontally */
+
+
+
+.layout-container {
+    display: flex;
+    flex-direction: row; /* Ensures the children (sidebar and content) are in a row */
+    justify-content: flex-start; /* Aligns children to the start of the container */
+    align-items: stretch; /* Stretches children to fill the container vertically */
+    height: calc(100vh - 60px); /* Adjusts the height to fill the viewport minus the height of the navbar */
+
 }
 
+.sidebar-container {
+    /* position: fixed; */
+    flex: 0 0 auto; /* This ensures the sidebar does not grow or shrink and has a base width */
+    height: 100%; /* Ensures the sidebar takes up the full height */
+}
 
-   .navbar_content {
-    grid-column: 1 / span 2; /* Span across both columns */
-    /* Style for the navbar */
-    padding: 10px;
-   }
+.content-container {
+    flex: 1 1 auto; /* This allows the content container to grow and shrink as needed */
+    height: 100vh; /* Ensures the content container takes up the full height */
+    padding: 20px; /* Adds some padding inside the content container */
+}
 
-   .sidebar-container {
-    /* Style for the sidebar container */
-    grid-row: 2; /* Position in the second row */
-    grid-column: 1; /* Position in the first column */
-   }
-
-   .content-container {
-    /* background-color: aquamarine; */
-    grid-row: 2; /* Position in the second row */
-    grid-column: 2; /* Position in the second column */
-     /* Enable scrolling if content overflows */
-    padding: 0 20px; /* Adjust the padding as needed */
-    transition: margin-left 0.3s ease; /* Smooth transition for the margin change */
-
-   }
-
-   .content {
-    padding: 20px; /* Example padding */
+.content {
+    padding: 20px;
    }
 /* Grid container for notes */
 .notes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+    grid-template-columns: repeat(2, 1fr);
+
     grid-gap: 20px;
     padding: 20px;
+
+
    }
 
-   /* Style for each note item */
-   .note-item {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   }
-   .input_note_ {
+
+.input_note_ {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px; /* Add margin between inputs and notes */
+    margin-bottom: 20px;
 }
 .note-item {
     position: relative;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
+    border: 1px solid #e5e5e5;
+    min-height: 200px; /* Adjust based on your needs */
+
+   }
+.note-item:hover {
+    box-shadow:#e5e5e5 0px 7px 29px 0px;
    }
 
-   .note-actions {
+/* .note-image,.fileContent {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    max-width: 50px;
+    max-height: 50px;
+
+} */
+
+.note-actions {
     position: absolute;
     bottom: 10px;
     right: 10px;
    }
 
-   .note-actions button {
+.note-actions button {
     margin-left: 5px;
    }
 
+.file-input {
+    display: none;
+}
+
+
+.input_create_note_title, .file-input,.input_create_note_desc {
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    outline: none !important;
+}
+.input_create_note_title:focus{
+    outline: none !important;
+    border: #ddd;
+
+}
+.input_note_ {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 20px;
+
+
+}
+
+
+.note_form_title_descreption {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 50%;
+    margin-left: 150px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+ .submit-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    margin-top: 5px;
 
 
 
+}
+
+.submit-button:hover,.upload-icon:hover{
+    background-color:  #ddd;
+    border-radius: 10px;
+    width: 27px;
+
+}
+
+
+
+.upload-icon {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin-top: 15px;
+}
+.note-content p{
+    font-size: 15px;
+
+
+}
+.note-content h1{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.note-image-container {
+    display: flex; /* Flex container */
+    flex-wrap: wrap; /* Wrap items onto multiple lines */
+    align-items: center; /* Align items vertically */
+}
+
+.note-image-wrapper {
+    position: relative;
+}
+
+.note-image {
+    max-width: 100px; /* Adjust based on your needs */
+    max-height: 100px; /* Adjust based on your needs */
+    border-radius: 5px;
+    margin-right: 10px; /* Space between images */
+}
+*:focus {
+    outline: none !important;
+    --tw-ring-shadow: none !important;
+}
+.note-image-wrapper .delete-file {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.note-image-wrapper:hover .delete-file {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-view{
+    background-color: rgba(211, 211, 211, 0.8);
+
+
+}
+.modal-content{
+    width: 60vw;
+   margin: auto;
+}
+.modal-container{
+}
+.input-update{
+    border: none;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    border-bottom-style: groove;
+}
+/*   not working 🤐 ? */
+.input-update :focus{
+    outline: none !important;
+    --tw-ring-shadow: none !important;
+
+}
+
+
+.file-upload-container{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-top: 10px;
+}
+.btn_update{
+    margin-left: 10px;
+    font-weight: bold;
+}

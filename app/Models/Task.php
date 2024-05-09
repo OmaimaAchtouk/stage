@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = ['title_task', 'task_done', 'id_job'];
+   
+    protected $fillable = [
+        
+        'title_task',
+        'task_done',
+       
+    ];
 
     public function job()
     {

@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id('id_task');
+            $table->id(); 
             $table->string('title_task');
             $table->boolean('task_done')->default(false);
-            $table->unsignedBigInteger('id_job');
-            $table->foreign('id_job')->references('id_job')->on('jobs')->onDelete('cascade');
+            $table->unsignedBigInteger('job_id'); 
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade'); 
             $table->timestamps();
         });
-        
     }
+    
 
     /**
      * Reverse the migrations.

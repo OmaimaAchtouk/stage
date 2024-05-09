@@ -3,8 +3,9 @@ header {
     margin: 10px 20px;
 
 }
-.navbar{
+header.navbar{
     margin-bottom: 10px;
+    background-color: rgb(18, 18, 17);
 }
 *{
     box-sizing: border-box;
@@ -14,14 +15,79 @@ header {
   font-optical-sizing: auto;
   font-weight: 700;
   font-size: 40px;
+
 }
-header .navbar{
+.logo{
+   /* Adjust the value as needed */
+
+
+}
+.navbar {
+    display: flex;
+    align-items: center;
+}
+.melange{
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+
 }
+.search_container{
+    margin-left: 100px;
+}
+
+.search_input_wrapper {
+    position: relative;
+}
+
+.search_icon {
+    position: absolute;
+    right: 10px; /* Adjust the value as needed */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .search_input{
+    width: 50vw;
+    padding: 12px 24px;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 28px;
+    border-radius: 50px;
+    border: 1px solid #575756;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+}
+.search_input::placeholder{
+    /* text-transform: uppercase; */
+    letter-spacing: 2px;
+
+
+}
+.search_input:hover {
+    padding: 12px 0 ;
+    outline: 0;
+    border: 1px solid transparent ;
+    border-bottom: 1px solid #575756;
+    border-radius: 0;
+    background-position: 100% center;
+
+}
+
+.search_input:focus {
+    padding: 12px 0 ;
+    outline: none !important;
+    border: 1px solid transparent ;
+    border-bottom: 1px solid #575756 ;
+    border-radius: 0;
+    background-position: 100% center;
+
+}
+/* .search_input{
     margin-right: 10vw;
     width: 50vw;
     padding: 12px 24px;
@@ -39,20 +105,4 @@ header .navbar{
     backface-visibility: hidden;
     transform-style: preserve-3d;
 
-}
-.search_input::placeholder{
-    /* text-transform: uppercase; */
-    letter-spacing: 2px;
-
-
-}
-.search_input:hover,
-.search_input:focus{
-    padding: 12px 0;
-    outline: 0;
-    border: 1px solid transparent;
-    border-bottom: 1px solid #575756;
-    border-radius: 0;
-    background-position: 100% center;
-
-}
+} */

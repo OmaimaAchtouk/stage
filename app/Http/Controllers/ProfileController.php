@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,37 +13,6 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
-    
-     
-    /**
-     * Display the user's profile form.
-     */
-    public function add(Request $request)
-    {
-        sleep(2);
-        $user = User::create([
-            'name' =>  $request->input("last_name"),
-            'email' => $request->input("first_name"),
-            'password' => "lizejfjz ",
-        ]);
-
-
-       return to_route('profile.test');
-
-    }
-
-    /**
-     * Display the user's profile form.
-     */
-    public function test(Request $request): Response
-    {
-       
-        return Inertia::render('Profile/Test', [
-            'data' => "Projet de stage",
-            "users"=>User::all()
-        ]);
-    }
-
     /**
      * Display the user's profile form.
      */

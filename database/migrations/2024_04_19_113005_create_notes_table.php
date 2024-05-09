@@ -11,14 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notes', function (Blueprint $table) {
-            $table->id('id_note');
-            $table->string('title_note')->nullable();
-            $table->text('description')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->timestamps();
-        });
+
+            Schema::create('files', function (Blueprint $table) {
+                $table->id('id_file');
+                $table->string('name_file');
+                $table->string('chemin');
+                $table->string('type_file');
+                $table->integer('taille');
+                $table->unsignedBigInteger('user_id');
+                $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+                $table->unsignedBigInteger('id_note')->nullable();
+                $table->foreign('id_note')->references('id_note')->on('notes')->onDelete('cascade');
+                $table->timestamps();
+            });
+
+
     }
 
     /**

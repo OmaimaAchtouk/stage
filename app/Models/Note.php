@@ -19,7 +19,7 @@ class Note extends Model
 
     public function files()
     {
-        return $this->hasMany(File::class);
+        return $this->hasMany(File::class, 'id_note');
     }
 
     public function tags()

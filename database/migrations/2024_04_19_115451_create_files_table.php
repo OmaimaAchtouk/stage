@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-       
+
             Schema::create('files', function (Blueprint $table) {
                 $table->id('id_file');
                 $table->string('name_file');
@@ -21,11 +21,11 @@ return new class extends Migration
                 $table->unsignedBigInteger('user_id');
                 $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
                 $table->unsignedBigInteger('id_note')->nullable();
-                $table->foreign('id_note')->references('user_id')->on('notes')->onDelete('cascade');
+                $table->foreign('id_note')->references('id_note')->on('notes')->onDelete('cascade');
                 $table->timestamps();
             });
-        
-        
+
+
     }
 
     /**

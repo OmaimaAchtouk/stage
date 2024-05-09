@@ -6,7 +6,11 @@ import { faFileImage, faFilePdf, faFileWord, faFileExcel, faFilePowerpoint, faFi
 import './note.css';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import EditNote from './EditNote';
-import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone';
+import { RiAddCircleLine ,RiDeleteBin3Line,RiImage2Line} from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
+import { BiEditAlt } from "react-icons/bi";
+import getFileIcon from './FileIcons';import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone';
+import FileIconSVG from './FileIconSVG';
 const NoteContent = ({ notes}) => {
     const [showEditModal, setshowEditModal] = useState(false);
     const [editingNote, setEditingNote] = useState(null);
@@ -14,7 +18,7 @@ const NoteContent = ({ notes}) => {
   const [values, setValues] = useState({
     note_title: "",
     note_desc: "",
-    file:null,
+    files:[],
 
 });
   const fileInputRef = useRef(null);
@@ -31,29 +35,37 @@ const NoteContent = ({ notes}) => {
   }
 
 //---------if one file ----------//
-  const handleFileChange=(e)=>{
-    setValues(prevValues=>({
+//   const handleFileChange=(e)=>{
+//     setValues(prevValues=>({
+//         ...prevValues,
+//         file:e.target.files[0],
+//     }));
+// };
+const handleFileChange = (e) => {
+    setValues(prevValues => ({
         ...prevValues,
-        file:e.target.files[0],
+        files: [...prevValues.files, ...e.target.files], // Append to the existing files array
     }));
 };
-
 
 
 //////-----BEFORE----///
   const handleNoteAdd=(e)=>{
     e.preventDefault()
-    if (values.note_title.trim() !== '' || values.note_desc.trim() !== '' || values.file !== null) {
+    if (values.note_title.trim() !== '' || values.note_desc.trim() !== '' || values.files.length >0) {
         const formData = new FormData();
-      Object.keys(values).forEach(key => {
-        formData.append(key, values[key]);
-      });
+        formData.append('note_title', values.note_title);
+        formData.append('note_desc', values.note_desc);
+        values.files.forEach(file => {
+            formData.append('files[]', file);
+        });
+
        router.post('/add',formData)
        console.log("Submitting form data...");
        setValues({
             note_title: '',
             note_desc: '',
-            file:null,
+            files:[],
        });
        if (fileInputRef.current) fileInputRef.current.value = ''; // Reset the file input
        // Reset isValid state after submission
@@ -84,35 +96,10 @@ const handleEditSubmit=(updatedNote)=>{
 
 
 }
+const handleDeleteFile=(id_file,id_note)=>{
+    router.delete(`/note/${id_note}/file/${id_file}`)
 
-
-
-const getFileIcon = (fileType) => {
-    switch (fileType) {
-        case 'image/jpeg':
-        case 'image/png':
-        case 'image/gif':
-            return <FontAwesomeIcon icon={faFileImage} style={{ color: 'blue' }} />;
-        case 'application/pdf':
-            return <FontAwesomeIcon icon={faFilePdf} style={{ color: 'red' }} />;
-        case 'application/msword':
-        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-            return <FontAwesomeIcon icon={faFileWord} style={{ color: 'green' }} />;
-        case 'application/vnd.ms-excel':
-        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-            return <FontAwesomeIcon icon={faFileExcel} style={{ color: 'orange' }} />;
-        case 'application/vnd.ms-powerpoint':
-        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-            return <FontAwesomeIcon icon={faFilePowerpoint} style={{ color: 'purple' }} />;
-        default:
-            return <FontAwesomeIcon icon={faFileAlt} style={{ color: 'black' }} />;
-    }
-};
-
-
-
-
-
+}
 
   return (
     <div>
@@ -134,10 +121,16 @@ const getFileIcon = (fileType) => {
           />
         <input type='file' ref={fileInputRef} className='file-input'
         id='file' onChange={handleFileChange} multiple />
-        <label htmlFor='file' className='upload-icon'>
-          <AttachmentIcon/>
+        <label htmlFor='file' className='upload-icon' style={{ fontSize: '25px' }}>
+           <span title='add a file'>
+              <RiImage2Line  className="react-icon"  style={{ color: 'gray' }} />
+            </span>
         </label>
-        <button type='submit' className='submit-button' >add a note</button>
+        <button type='submit' className='submit-button' style={{ fontSize: '25px' }}>
+            <span title='add the note'>
+            <RiAddCircleLine  className="react-icon" style={{ color: 'gray' }}/>
+            </span>
+        </button>
       </div>
       </form>
 
@@ -145,32 +138,43 @@ const getFileIcon = (fileType) => {
 
         {[...notes].reverse().map((note,index)=>{
             return (<div key={index} className='note-item'>
-                        <h1> {note.title_note}</h1>
+                        <div className='note-content'>
+                        <h1 > {note.title_note}</h1>
                         <p>{note.description}</p>
+                        </div>
                         {/* Display the file if it exists */}
                         {note.files.length >0 && (
 
-                            <div>
+                            <div className="note-image-container">
                             {note.files.map((file, index) => (
-                                <div key={index}>
+                                <div key={index} className="note-image-wrapper" >
                                     {file.type_file.startsWith('image/') ? (
                                         <img src={`/storage/${file.chemin}`} alt="File" className='note-image' />
                                     ) : (
+                                        <div className='fileContent'>
                                         <a href={`/storage/${file.chemin}`} download={file.name_file}>
-                                        {getFileIcon(file.type_file)}                                    </a>
+                                        <FileIconSVG  width="50" height="50" /> </a>
+                                        </div>
                                     )}
+                                    <button  className='delete-file'   onClick={() => handleDeleteFile(file.id_file,note.id_note)}>
+                                                <FontAwesomeIcon icon={faTrash} size={25} style={{ color: 'gray' }} />
+                                    </button>
                                 </div>
                             ))}
-                        </div>
+                            </div>
 
 
                          )}
                         <div className="note-actions">
-                          <button  onClick={() => handleEditClick(note)} >
-                                <FontAwesomeIcon icon={faEdit} />
+                          <button  onClick={() => handleEditClick(note)} style={{ fontSize: '20px' }}>
+                            <span title='Edit the note'>
+                                <BiEditAlt   style={{ color: 'gray' }}/>
+                            </span>
                           </button>
-                          <button onClick={() => handleDelete(note.id_note)}>
-                                <FontAwesomeIcon icon={faTrash} />
+                          <button onClick={() => handleDelete(note.id_note)} style={{ fontSize: '20px' }}>
+                            <span title='delete the note'>
+                                <RiDeleteBin3Line  style={{ color: 'gray' }} />
+                            </span>
                           </button>
                          </div>
 

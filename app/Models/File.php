@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-    protected $fillable = ['name_file', 'chemin', 'type_file', 'taille', 'id_user', 'id_note'];
+    protected $primaryKey='id_file';
+    protected $fillable = ['name_file', 'chemin', 'type_file', 'taille', 'user_id', 'id_note'];
 
     public function user()
     {
@@ -16,7 +17,7 @@ class File extends Model
 
     public function note()
     {
-        return $this->belongsTo(Note::class);
+        return $this->belongsTo(Note::class, 'id_note');
     }
 }
 
