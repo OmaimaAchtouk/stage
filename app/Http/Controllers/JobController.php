@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Inertia\Inertia;
-use App\Models\Task; 
+use App\Models\Task;
 
 class JobController extends Controller
 {
@@ -20,10 +20,10 @@ class JobController extends Controller
 
         // $submittedJobs = Job::where('user_id', auth()->id())->with('tasks')->get();
 
-        return Inertia::render('Profile/tasks/indexTask', [
+        return Inertia::render('Profile/tasks/tasksE', [
             'jobs' => $jobs,
             // 'submittedJobs' => $submittedJobs,
-            
+
         ]);
     }
 
@@ -47,23 +47,23 @@ class JobController extends Controller
             'tasks.*.title_task' => 'required|string',
             'tasks.*.task_done' => 'boolean',
         ]);
-    
+
         $job = Job::create([
             'title_job' => $request->title_job,
             'date_job' => $request->date_job,
             'user_id' => auth()->id(),
         ]);
-    
+
         foreach ($request->tasks as $taskData) {
             $job->tasks()->create([
                 'title_task' => $taskData['title_task'],
                 'task_done' => $taskData['task_done'] ?? false,
             ]);
         }
-    
+
         return redirect()->back();
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -121,11 +121,5 @@ class JobController extends Controller
 
         return redirect()->back();
     }
-
-
-
-
-
-   
 
 }

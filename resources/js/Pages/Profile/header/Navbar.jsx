@@ -1,35 +1,30 @@
-import React, { useState} from 'react';
-import { Inertia } from '@inertiajs/inertia';
-import {  router } from '@inertiajs/react';
+import React from 'react';
 import { FaSearch } from 'react-icons/fa';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import './css.css'
-const Navbar = ({title,auth}) => {
-    const [searchQuery,setSearchQuery]=useState('');
-    const handleSearch=()=>{
-        router.get(route('note.index'),{search: searchQuery})
-    }
+import { router } from '@inertiajs/react';
+import './css.css';
+
+const Navbar = ({ title, searchQuery, setSearchQuery, handleSearch }) => {
   return (
-    <header >
-    <nav className='navbar'>
+    <header>
+      <nav className='navbar'>
         <div className='logo'>
-        <span className='logo_name'>{title}</span>
+          <span className='logo_name'>{title}</span>
         </div>
         <div className='search_container'>
-        <div className='search_input_wrapper'>
-
-            <input className='search_input'
-             type='text'
-             placeholder='Search a note'
-             onChange={(e)=>setSearchQuery(e.target.value)}  />
-             <FaSearch className='search_icon' onClick={handleSearch} />
+          <div className='search_input_wrapper'>
+            <input
+              className='search_input'
+              type='text'
+              placeholder='Search a note'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <FaSearch className='search_icon' onClick={handleSearch} />
+          </div>
         </div>
-
-         </div>
       </nav>
+    </header>
+  );
+};
 
-      </header>
-  )
-}
-
-export default Navbar
+export default Navbar;

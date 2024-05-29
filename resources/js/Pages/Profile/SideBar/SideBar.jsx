@@ -36,9 +36,8 @@ const SideBar = ({ onTitleChange }) => {
           </div>
           <div className='menu-item'>
             <MenuItem
-              icon={<FaTasks size={20}/>
-            }
-              component={<Link href="/task" />}
+              icon={<FaTasks size={20}/>}
+              component={<Link href={route('job.index')}  />}
               title='tasks'
               onClick={() => onTitleChange('tasks')}
             >

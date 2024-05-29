@@ -54,11 +54,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-    //  create tasks route
-    // Route::get('/task', [TaskController::class, 'index'])->name('task.index');
-    //  Route::post('/task/store', [TaskController::class, 'store'])->name('task.store');
-    //  Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('task.toggle');
-    //  Route::delete('/task/destroy/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
 
       //  create tasks route
 

@@ -10,12 +10,12 @@ function Task({ task, toggleCompleted,setTaskChanged }) {
         type="checkbox"
         checked={task.completed}
         onChange={() => toggleCompleted(task.id_task)}
-      />  
-        <input 
+      />
+        <input
         type="text" className='textTask'
         value={task.title_task}
         onChange={() => setTaskChanged(task.title_task)}
-      />  
+      />
     </div>
  );
 }

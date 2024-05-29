@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Task from './Task';
+import Task from './task';
 import './listtask.css';
 import { CgAdd } from "react-icons/cg";
 
@@ -38,7 +38,7 @@ const ListTask = ({ formData, setFormData }) => {
   const setTaskChanged= (index, newTitle) => {
   const updatedTasks = [...formData.tasks];
   updatedTasks[index].title_task = newTitle;
- 
+
   setFormData({
     ...formData,
     tasks: updatedTasks,
@@ -48,12 +48,12 @@ const ListTask = ({ formData, setFormData }) => {
 
   return (
     <div className="task-list">
-     
+
 
       {formData.tasks.map((task, index) => (
         <div key={index}  className='spaceTask'>
         <Task
-          
+
            task={task}
           toggleCompleted={() => toggleCompleted(index)}
          setTaskChanged={()=>setTaskChanged(index)}
@@ -61,21 +61,16 @@ const ListTask = ({ formData, setFormData }) => {
         </div>
       ))}
 
-    <input type="checkbox"/>  
-
-  
-
-  
+<label>tasks:</label> <br />
+    {/* <input type="checkbox"/>   */}
+    <div className='taskbutton'>
            <input className="text" type="text"  value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Add a task..." />
-           
-           
-
-
       <button type="button" onClick={addTask} className='icon-add'>
       <CgAdd />
       </button>
+      </div>
     </div>
   );
 };
