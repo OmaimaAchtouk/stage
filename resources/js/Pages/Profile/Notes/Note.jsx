@@ -6,7 +6,7 @@ import NoteContent from './NoteContent';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 
-const SideBarRoutes = ({notes,auth,content}) => {
+const SideBarRoutes = ({notes,auth,user,content}) => {
  const [title, setTitle] = useState('Notes');
 
  const handleTitleChange = (newTitle) => {

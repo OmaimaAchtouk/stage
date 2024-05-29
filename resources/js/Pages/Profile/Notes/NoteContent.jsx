@@ -11,6 +11,7 @@ import { CiEdit } from "react-icons/ci";
 import { BiEditAlt } from "react-icons/bi";
 import getFileIcon from './FileIcons';import PermMediaTwoToneIcon from '@mui/icons-material/PermMediaTwoTone';
 import FileIconSVG from './FileIconSVG';
+
 const NoteContent = ({ notes}) => {
     const [showEditModal, setshowEditModal] = useState(false);
     const [editingNote, setEditingNote] = useState(null);
@@ -126,11 +127,13 @@ const handleDeleteFile=(id_file,id_note)=>{
               <RiImage2Line  className="react-icon"  style={{ color: 'gray' }} />
             </span>
         </label>
+
         <button type='submit' className='submit-button' style={{ fontSize: '25px' }}>
             <span title='add the note'>
             <RiAddCircleLine  className="react-icon" style={{ color: 'gray' }}/>
             </span>
         </button>
+
       </div>
       </form>
 

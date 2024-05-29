@@ -21,22 +21,16 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-<<<<<<< HEAD
         "@inertiajs/inertia": "^0.11.1",
-=======
         "@fortawesome/fontawesome-svg-core": "^6.5.2",
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/react-fontawesome": "^0.2.0",
->>>>>>> 2d56d981e1d0d57f41e5b94fb4e1ddd6c3a413ba
         "@inertiajs/inertia-react": "^0.8.1",
         "@mui/icons-material": "^5.15.15",
-<<<<<<< HEAD
         "bootstrap": "^5.3.3",
         "flowbite-react": "^0.9.0",
         "react-bootstrap": "^2.10.2",
-=======
         "react-icons": "^5.2.0",
->>>>>>> 61ebc7be209da92e624962c1b554f85314b2457c
         "react-pro-sidebar": "^1.1.0"
     }
 }

@@ -31,9 +31,7 @@ class NoteController extends Controller
                      ->orWhere('description', 'like', '%' . $searchQuery . '%');
              });
          }
-
          $notes = $notes->get();
-
          return Inertia::render('Profile/Notes/Note', [
              'notes' => $notes,
          ]);
@@ -247,7 +245,7 @@ public function update(Request $request, string $id_note)
     $rules = [
         'note_title' => 'nullable|string',
         'note_desc' => 'nullable|string',
-        'files.*' => 'nullable|file|max:2048', // Allow multiple files
+        'files.*' => 'nullable|file|max:2048',
     ];
 
     $validator = Validator::make($request->all(), $rules);
@@ -288,39 +286,25 @@ public function update(Request $request, string $id_note)
      */
     public function destroy(string $id_note)
     {
-    // Find the note by its ID
     $note = Note::find($id_note);
     // Check if the note exists and belongs to the authenticated user
     if ($note && $note->user_id == Auth::id()) {
            // Delete the note
            $note->delete();
-            // If the note has associated files, delete them as well
-
-           // Redirect back to the notes index page
            return redirect()->route('note.index');
     }
-
-    // If the note does not exist or does not belong to the authenticated user, redirect with an error message
     return redirect()->route('note.index')->with('error', 'Note not found or you do not have permission to delete this note.');
     }
 
     public function deleteFile(string $id_note, string $id_file)
     {
         $note = Note::find($id_note);
-
         $file = $note->files()->find($id_file);
-
         // Delete the file from storage
         Storage::delete($file->chemin);
-
-
         // Remove the file association from the note
          $file->delete();
-        
-
     }
-
-
 }
 
 
