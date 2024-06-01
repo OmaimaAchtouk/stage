@@ -18,26 +18,48 @@ class NoteController extends Controller
      * Display a listing of the resource.
      */
 
-////----with search----//
+
      public function index(Request $request)
-     {
-         $searchQuery = $request->input('search');
+{
+    $searchQuery = $request->input('search');
 
-         $notes = Note::with('files');
+    $notes = Note::with('files')
+        ->orderBy('is_pinned', 'desc') // Pinned notes first
+        ->orderBy('created_at', 'desc'); // Then by creation date
 
-         if ($searchQuery) {
-             $notes->where(function ($query) use ($searchQuery) {
-                 $query->where('title_note', 'like', '%' . $searchQuery . '%')
-                     ->orWhere('description', 'like', '%' . $searchQuery . '%');
-             });
-         }
-         $notes = $notes->get();
-         return Inertia::render('Profile/Notes/Note', [
-             'notes' => $notes,
-         ]);
+    if ($searchQuery) {
+        $notes->where(function ($query) use ($searchQuery) {
+            $query->where('title_note', 'like', '%' . $searchQuery . '%')
+                ->orWhere('description', 'like', '%' . $searchQuery . '%');
+        });
+    }
+
+    $notes = $notes->get();
+    return Inertia::render('Profile/Notes/Note', [
+        'notes' => $notes,
+    ]);
+}
+
+////----with search----//
+    //  public function index(Request $request)
+    //  {
+    //      $searchQuery = $request->input('search');
+
+    //      $notes = Note::with('files');
+
+    //      if ($searchQuery) {
+    //          $notes->where(function ($query) use ($searchQuery) {
+    //              $query->where('title_note', 'like', '%' . $searchQuery . '%')
+    //                  ->orWhere('description', 'like', '%' . $searchQuery . '%');
+    //          });
+    //      }
+    //      $notes = $notes->get();
+    //      return Inertia::render('Profile/Notes/Note', [
+    //          'notes' => $notes,
+    //      ]);
 
 
-     }
+    //  }
 
     //--old index---///
     // public function index():response
@@ -63,59 +85,7 @@ class NoteController extends Controller
      */
 
 
-//-------store before---------//
-    // public function store(Request $request)
-    // {
-    //     if ($request->hasFile('file')){
-    //         $rules = [
-    //             'note_title' => 'nullable|string',
-    //             'note_desc' => 'nullable|string',
-    //             'file'=>'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
-    //         ];
-    //     } else {
-    //         $rules = [
-    //             'note_title' => 'nullable|string',
-    //             'note_desc' => 'nullable|string',
-    //         ];
-    //     }
 
-
-    //     // Validate the request data
-    //     $validator = Validator::make($request->all(), $rules);
-    //     $validator->after(function ($validator) use ($request) {
-    //         if (!$request->has('note_title') && !$request->has('note_desc') && !$request->hasFile('file')) {
-    //             $validator->errors()->add('note_title', 'At least one field is required.');
-    //         }
-    //     });
-    //     if ($validator->fails()) {
-    //         return back()->withErrors($validator)->withInput();
-    //     }
-
-    //     //create a note
-    //     $note=Note::create([
-    //         'title_note' => $request->input('note_title'),
-    //         'description' => $request->input('note_desc'),
-    //         'user_id'=>auth()->id(),
-
-    //     ]);
-    //     // Handle file upload if a file was provided
-    //     if ($request->hasFile('file')) {
-    //         $file = $request->file('file');
-    //         $filename = time() . '_' . $file->getClientOriginalName();
-    //         $path = $file->storeAs('files', $filename, 'public');
-
-    //         // Create a new File model instance and associate it with the note
-    //         $fileModel = new File;
-    //         $fileModel->name_file = $filename;
-    //         $fileModel->chemin = $path;
-    //         $fileModel->type_file = $file->getClientMimeType();
-    //         $fileModel->taille = $file->getSize();
-    //         $fileModel->user_id = Auth::id();
-    //         $fileModel->id_note = $note->id_note;
-    //         $fileModel->save();
-    //     }
-    //     return to_route('note.index');
-    // }
 
     public function store(Request $request)
 {
@@ -180,63 +150,7 @@ class NoteController extends Controller
         return inertia('Profile/Notes/EditNote', ['note' => $note]);
 
     }
-        ///////---------before/////
-// public function update(Request $request, string $id_note)
-// {
-//     $note = Note::findOrFail($id_note);
 
-//     $rules = [
-//         'note_title' => 'nullable|string',
-//         'note_desc' => 'nullable|string',
-//         'files.*' => 'nullable|file|max:2048',
-//     ];
-
-//     $validator = Validator::make($request->all(), $rules);
-//     if ($validator->fails()) {
-//         return back()->withErrors($validator)->withInput();
-//     }
-
-//     $note->update([
-//         'title_note' => $request->input('note_title'),
-//         'description' => $request->input('note_desc'),
-//     ]);
-
-//     // Fetch the file associated with the note
-//     $fileModel = File::where('id_note', $note->id_note)->first();
-
-//     // If a file is uploaded, handle the update
-//     if ($request->hasFile('file')) {
-//         $file = $request->file('file');
-//         $filename = time() . '_' . $file->getClientOriginalName();
-//         $path = $file->storeAs('files', $filename, 'public');
-
-//         // Correctly delete the existing file using the stored path if it exists
-//         if ($fileModel && $fileModel->chemin) {
-//             Storage::disk('public')->delete($fileModel->chemin);
-//         }
-
-//         // Update or create the File model with the new file information
-//         if ($fileModel) {
-//             $fileModel->update([
-//                 'name_file' => $filename,
-//                 'chemin' => $path,
-//                 'type_file' => $file->getClientMimeType(),
-//                 'taille' => $file->getSize(),
-//             ]);
-//         } else {
-//             $fileModel = new File;
-//             $fileModel->name_file = $filename;
-//             $fileModel->chemin = $path;
-//             $fileModel->type_file = $file->getClientMimeType();
-//             $fileModel->taille = $file->getSize();
-//             $fileModel->user_id = Auth::id();
-//             $fileModel->id_note = $note->id_note;
-//             $fileModel->save();
-//         }
-//     }
-
-//     return redirect()->route('note.index');
-// }
 
 public function update(Request $request, string $id_note)
 {
@@ -278,6 +192,101 @@ public function update(Request $request, string $id_note)
 
     return redirect()->route('note.index');
 }
+//    ////  --- the new store and update----/////
+//    public function store(Request $request)
+//    {
+//        $rules = [
+//            'note_title' => 'nullable|string',
+//            'note_desc' => 'nullable|string',
+//            'files.*' => 'nullable|file|max:2048',
+//            'note_color' => 'required|string',
+
+//        ];
+
+//        $validator = Validator::make($request->all(), $rules);
+//        $validator->after(function ($validator) use ($request) {
+//            if (!$request->has('note_title') && !$request->has('note_desc') && !$request->hasFile('files')) {
+//                $validator->errors()->add('note_title', 'At least one field is required.');
+//            }
+//        });
+//        if ($validator->fails()) {
+//            return back()->withErrors($validator)->withInput();
+//        }
+
+//        $note = Note::create([
+//            'title_note' => $request->input('note_title'),
+//            'description' => $request->input('note_desc'),
+//            'user_id' => auth()->id(),
+//           'note_color'=> $request->input('note_color'),
+
+//        ]);
+
+//        if ($request->hasFile('files')) {
+//            foreach ($request->file('files') as $file) {
+//                $filename = time() . '_' . $file->getClientOriginalName();
+//                $path = $file->storeAs('files', $filename, 'public');
+
+//                $fileModel = new File;
+//                $fileModel->name_file = $filename;
+//                $fileModel->chemin = $path;
+//                $fileModel->type_file = $file->getClientMimeType();
+//                $fileModel->taille = $file->getSize();
+//                $fileModel->user_id = Auth::id();
+//                $fileModel->id_note = $note->id_note;
+//                $fileModel->save();
+//            }
+//        }
+
+//        return redirect()->route('note.index');
+//    }
+//     public function edit(string $id_note)
+//     {
+//         $note=Note::with('files')->findOrFail($id_note);
+//         return inertia('Profile/Notes/EditNote', ['note' => $note]);
+
+//     }
+//    public function update(Request $request, string $id_note)
+//    {
+//        $note = Note::findOrFail($id_note);
+
+//        $rules = [
+//            'note_title' => 'nullable|string',
+//            'note_desc' => 'nullable|string',
+//            'files.*' => 'nullable|file|max:2048',
+//            'note_color' => 'required|string',
+
+//        ];
+
+//        $validator = Validator::make($request->all(), $rules);
+//        if ($validator->fails()) {
+//            return back()->withErrors($validator)->withInput();
+//        }
+
+//        $note->update([
+//            'title_note' => $request->input('note_title'),
+//            'description' => $request->input('note_desc'),
+//            'note_color'=> $request->input('note_color'),
+
+//        ]);
+
+//        if ($request->hasFile('files')) {
+//            foreach ($request->file('files') as $file) {
+//                $filename = time() . '_' . $file->getClientOriginalName();
+//                $path = $file->storeAs('files', $filename, 'public');
+
+//                $fileModel = new File;
+//                $fileModel->name_file = $filename;
+//                $fileModel->chemin = $path;
+//                $fileModel->type_file = $file->getClientMimeType();
+//                $fileModel->taille = $file->getSize();
+//                $fileModel->user_id = Auth::id();
+//                $fileModel->id_note = $note->id_note;
+//                $fileModel->save();
+//            }
+//        }
+
+//        return redirect()->route('note.index');
+//    }
 
 
 
@@ -305,6 +314,17 @@ public function update(Request $request, string $id_note)
         // Remove the file association from the note
          $file->delete();
     }
+
+    public function pin($id_note)
+{
+    $note = Note::find($id_note);
+    if ($note->user_id === auth()->id()) {
+        $note->is_pinned = !$note->is_pinned;
+        $note->save();
+    }
+    return redirect()->route('note.index');
+}
+
 }
 
 

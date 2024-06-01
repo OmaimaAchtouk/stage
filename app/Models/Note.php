@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    protected $fillable = ['title_note', 'description', 'user_id'];
+    protected $fillable = ['title_note', 'description', 'user_id','note_color'];
 
     // Specify the primary key for the model.
     protected $primaryKey = 'id_note';

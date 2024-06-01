@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/note/edit/{id_note}', [NoteController::class, 'edit'])->name('note.edit');
     Route::post('/note/{id_note}', [NoteController::class, 'update'])->name('note.update');
     Route::delete('/note/{id_note}/file/{id_file}', [NoteController::class, 'deleteFile'])->name('note.deleteFile');
+    Route::post('/note/pin/{id_note}', [NoteController::class, 'pin'])->name('note.pin');
 
 
     Route::post('/profile/add', [ProfileController::class, 'add'])->name('profile.add');

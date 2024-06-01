@@ -9,13 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    
+    public function up(): void
+    {
+        Schema::table('notes', function (Blueprint $table) {
+            $table->boolean('is_pinned')->default(false);
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::table('notes', function (Blueprint $table) {
+            $table->dropColumn('is_pinned');
+        });
     }
 };

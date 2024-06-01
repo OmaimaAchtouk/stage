@@ -15,8 +15,9 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->bigIncrements('id_note'); // Primary key
-            $table->string('title_note');
+            $table->string('title_note')->nullable();
             $table->text('description')->nullable();
+            $table->string('note_color')->default('#ffffff');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
