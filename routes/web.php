@@ -7,6 +7,7 @@ use App\Http\Controllers\NoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\EventController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,7 +64,18 @@ Route::middleware('auth')->group(function () {
       Route::delete('/job/{id}', [JobController::class, 'destroy'])->name('job.destroy');
       Route::put('/job/{id}', [JobController::class, 'update'])->name('job.update');
 
+      //
+      Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    //   Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+      Route::post('/events', [EventController::class, 'store'])->name('events.store');
+//
 
+
+// routes/web.php
+
+
+
+// Route::get('/events/date/{date}', [EventController::class, 'eventsByDate'])->name('events.date');
 
 
 

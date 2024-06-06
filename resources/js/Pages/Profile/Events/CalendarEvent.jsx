@@ -7,11 +7,11 @@ import SideBar from '../SideBar/SideBar';
 import '../Notes/note.css';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-import IndexTask from './indexTask';
+import CalendarE from './Calendar';
 import { Inertia } from '@inertiajs/inertia';
 
-const TasksE = ({jobs,auth}) => {
-    const [title, setTitle] = useState('Tasks');
+const CalendarEvent = ({events ,auth}) => {
+    const [title, setTitle] = useState('Calendar');
 
     const handleTitleChange = (newTitle) => {
        setTitle(newTitle);
@@ -35,7 +35,7 @@ const TasksE = ({jobs,auth}) => {
     </div>
     <div className="content-container">
       <div className="content">
-       <IndexTask jobs= {jobs} />
+       <CalendarE  events={ events }/>
       </div>
     </div>
     </div>
@@ -43,5 +43,5 @@ const TasksE = ({jobs,auth}) => {
  );
 };
 
-export default TasksE ;
+export default CalendarEvent ;
 
